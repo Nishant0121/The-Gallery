@@ -6,10 +6,7 @@ import Register from "./pages/register";
 import axios from "axios";
 import { UserContexProvider } from "./userContext";
 import Account from "./pages/account";
-require("dotenv").config();
-
-const URL = process.env.BACKEND;
-axios.defaults.baseURL = URL;
+axios.defaults.baseURL = "https://the-gallery-server.onrender.com/";
 axios.defaults.withCredentials = true;
 
 function App() {
