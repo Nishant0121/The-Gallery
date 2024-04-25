@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContex } from "../userContext";
+import { UserContext } from "../userContext";
 
 export default function Header() {
-  const { user } = useContext(UserContex);
+  const { user } = useContext(UserContext);
+  const userdata = JSON.parse(localStorage.getItem("user"));
   return (
     <div>
       <div className="header flex justify-between items-center">
@@ -48,7 +49,7 @@ export default function Header() {
               />
             </svg>
           </div>
-          {!!user && <div>{user.user.name}</div>}
+          {!!userdata && <div>{userdata.user.name}</div>}
         </Link>
       </div>
     </div>

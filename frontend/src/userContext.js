@@ -1,9 +1,11 @@
-import { createContext, useState } from "react";
-export const UserContex = createContext({});
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
+export const UserContext = createContext({});
 
 export function UserContexProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [ready] = useState(false);
+
+  const [ready, setReady] = useState(false);
   // useEffect(() => {
   //   if (!user) {
   //     axios.get("/profile").then(({ data }) => {
@@ -11,10 +13,10 @@ export function UserContexProvider({ children }) {
   //       setReady(true);
   //     });
   //   }
-  // }, []);
+  // }, [user]);
   return (
-    <UserContex.Provider value={{ user, setUser, ready }}>
+    <UserContext.Provider value={{ user, setUser, ready }}>
       {children}
-    </UserContex.Provider>
+    </UserContext.Provider>
   );
 }

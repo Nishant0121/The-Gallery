@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Navigate, Link } from "react-router-dom";
-import { useContext } from "react";
-import { UserContex } from "../userContext";
 import axios from "axios";
+import { UserContext } from "../userContext"; // Corrected import
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const { setUser } = useContext(UserContex);
+  const { user, setUser } = useContext(UserContext); // Corrected typo in useContext
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+      setRedirect(true);
+    }
+  }, []); // Run once on component mount
 
   const login = async (e) => {
     e.preventDefault();
@@ -18,13 +25,15 @@ export default function Login() {
         password,
       });
       setUser(userinfo.data);
+      localStorage.setItem("user", JSON.stringify(userinfo.data)); // Store user data in localStorage
       alert("login success");
       setRedirect(true);
     } catch (error) {
       alert("login failed");
     }
   };
-  if (redirect) {
+
+  if (redirect || user) {
     return <Navigate to="/" />;
   }
 

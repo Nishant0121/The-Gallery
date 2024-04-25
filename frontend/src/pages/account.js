@@ -8,6 +8,7 @@ export default function Account() {
       await axios.post("/logout");
       // Redirect to the login page or perform any other action after logout
       // For example, you can redirect to the login page
+      localStorage.clear();
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout failed", error);
