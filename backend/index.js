@@ -9,10 +9,9 @@ const User = require("./model/user_model");
 require("dotenv").config(); // Load environment variables
 
 const app = express();
-const PORT = 4000; // Set port from environment variable or default to 4000
-const MONGO_URL =
-  "mongodb+srv://nishantpatil0121:CKfO854AsqfvLwgC@cluster0.fvrxcnb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const secret = bcrypt.genSaltSync(10); // Set your JWT secret key in environment variables
+const PORT = process.env.PORT || 4000; // Set port from environment variable or default to 4000
+const MONGO_URL = process.env.MONGO_URL;
+const secret = bcrypt.genSaltSync(process.env.jwt); // Set your JWT secret key in environment variables
 
 app.use(express.json());
 app.use(cookieParser());
