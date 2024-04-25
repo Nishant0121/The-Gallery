@@ -34,8 +34,11 @@ export default function Header() {
             Contact
           </Link>
         </div>
-        <Link to={user ? "/account" : "/login"} className="user flex">
-          <div>
+        <Link
+          to={user ? "/account" : "/login"}
+          className="user flex p-1 rounded-full  dark:bg-secondary-dark bg-secondary-light justify-around"
+        >
+          <div className="p-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -49,7 +52,11 @@ export default function Header() {
               />
             </svg>
           </div>
-          {!!userdata && <div>{userdata.user.name}</div>}
+          {userdata ? (
+            <div className="p-1">{userdata.user.name}</div>
+          ) : (
+            <div className="p-1">Login</div>
+          )}
         </Link>
       </div>
     </div>
