@@ -6,8 +6,10 @@ import Register from "./pages/register";
 import axios from "axios";
 import { UserContexProvider } from "./userContext";
 import Account from "./pages/account";
+require("dotenv").config();
 
-axios.defaults.baseURL = "http://localhost:4000";
+const URL = process.env.BACKEND;
+axios.defaults.baseURL = URL;
 axios.defaults.withCredentials = true;
 
 function App() {
