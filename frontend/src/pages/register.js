@@ -8,7 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   const register = async (e) => {
     e.preventDefault();
@@ -18,17 +18,17 @@ export default function Register() {
         email,
         password,
       });
-      alert("Registration successful");
-
       setUser(userinfo.data);
+      // localStorage.setItem("user", JSON.stringify(userinfo.data)); // Store user data in localStorage
+      alert("Registration success");
       setRedirect(true);
     } catch (error) {
       alert("Registration failed");
     }
   };
 
-  if (redirect) {
-    return <Navigate to="/" />;
+  if (redirect || user) {
+    return <Navigate to="/login" />;
   }
 
   return (
