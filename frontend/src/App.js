@@ -7,7 +7,7 @@ import axios from "axios";
 import { UserContexProvider } from "./userContext";
 import Account from "./pages/account";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://the-gallery-server.onrender.com/";
 axios.defaults.withCredentials = true;
 
 function App() {
