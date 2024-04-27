@@ -65,7 +65,7 @@ function UploadImage() {
             <div>
               <div key={index}>{image.image}</div>
               <img
-                src={require(`../images/${image.image}`)}
+                src={require(`../../../backend/images/${image.image}`)}
                 alt=""
                 srcset=""
                 height={100}
