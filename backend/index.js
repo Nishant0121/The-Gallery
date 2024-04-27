@@ -4,16 +4,19 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+const path = require("path");
 const User = require("./model/user_model");
+const Image = require("./model/img_module");
 
 require("dotenv").config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 4000; // Set port from environment variable or default to 4000
 const MONGO_URL = process.env.MONGO_URL;
-const jwtKey = process.env.jwt;
-console.log(jwtKey);
-const secret = bcrypt.genSaltSync(10); // Set your JWT secret key in environment variables
+const jwtSecret = process.env.JWT_SECRET;
+console.log(jwtSecret);
+const secret = bcrypt.genSaltSync(10);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -95,6 +98,75 @@ app.post("/login", async (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.clearCookie("token").json({ message: "Logout successful" });
+});
+
+// Initialize multer with disk storage
+
+// Use multer middleware for handling file uploads
+// app.post("/upload", (req, res) => {
+
+//   upload(req, res, async (err) => {
+//     try {
+//       if (err) {
+//         throw err;
+//       } else {
+//         // Access uploaded file details from req.file
+//         const { filename, path } = req.file;
+
+//         // Create a new image document in the database
+//         const newImage = await Image.create({
+//           userId: req.body.userId,
+//           filename: filename,
+//           filePath: path,
+//         });
+
+//         res.json({ message: "Image uploaded successfully", image: newImage });
+//       }
+//     } catch (error) {
+//       console.error("Image upload failed", error);
+//       res
+//         .status(500)
+//         .json({ message: "Image upload failed", error: error.message });
+//     }
+//   });
+// });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../frontend/src/images/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/upload", upload.single("image"), async (req, res) => {
+  console.log(req.body);
+  const imageName = req.file.filename;
+  const userId = req.body.userId;
+
+  try {
+    await Image.create({ userId: userId, image: imageName });
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: error });
+  }
+});
+
+app.get("/images", async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    // Query the database for the user's images
+    const images = await Image.find({ userId: userId }); // Query images by userId
+    // Send the images as a response
+    res.json(images);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 });
 
 app.listen(PORT, () => {
