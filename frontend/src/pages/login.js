@@ -16,7 +16,7 @@ export default function Login() {
       setUser(storedUser);
       setRedirect(true);
     }
-  }, []);
+  }, [setUser]);
 
   const login = async (e) => {
     e.preventDefault();

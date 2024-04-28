@@ -4,7 +4,7 @@ import Layout from "./layout";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import axios from "axios";
-import { UserContexProvider } from "./userContext";
+import { UserContextProvider } from "./userContext";
 import Account from "./pages/account";
 import Home from "./pages/home";
 import AddIamge from "./pages/add_image";
@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <UserContexProvider>
+    <UserContextProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -26,7 +26,7 @@ function App() {
           <Route path="/addimage" element={<AddIamge />} />
         </Route>
       </Routes>
-    </UserContexProvider>
+    </UserContextProvider>
   );
 }
 
