@@ -9,7 +9,7 @@ import Account from "./pages/account";
 import Home from "./pages/home";
 import AddIamge from "./pages/add_image";
 
-axios.defaults.baseURL = "https://the-gallery-server.onrender.com/";
+axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<div>About</div>} />
-          <Route path="/contact" element={<div>Contact</div>} />
+          <Route path="/contact" element={<div>Kam Chalu Hy (:P)</div>} />
           <Route path="/login" element={<Login />} />
           <Route path="/account" element={<Account />} />
           <Route path="/register" element={<Register />} />

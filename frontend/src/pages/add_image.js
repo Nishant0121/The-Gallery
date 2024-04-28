@@ -8,6 +8,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../firebase";
+import { Link } from "react-router-dom";
 
 function UploadImage() {
   const [image, setImage] = useState(undefined);
@@ -114,8 +115,8 @@ function UploadImage() {
       );
       console.log(response);
       alert("Image uploaded successfully");
-      // Add the newly uploaded image to the images state
       setImages([...images, response.data]);
+      window.location.reload();
     } catch (error) {
       console.error("Upload failed:", error);
     }
@@ -123,35 +124,68 @@ function UploadImage() {
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="file"
-          accept="image/*"
-          name="image"
-          onChange={onImageChange}
-        />
-        <p>{imgper}%</p>
-        {image === null ? (
-          <div>No image selected</div>
+      <form className=" mx-3 mt-2" onSubmit={onSubmit}>
+        <div>
+          <label
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="file_input"
+          >
+            Upload file
+          </label>
+          <input
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            type="file"
+            accept="image/*"
+            name="image"
+            onChange={onImageChange}
+          />
+          <p
+            className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+            id="file_input_help"
+          >
+            Upload Images Only
+          </p>
+        </div>
+
+        <div className="flex items-center">
+          <progress
+            className="progress rounded-full bg-black dark:bg-white"
+            value={imgper}
+            max={100}
+          ></progress>
+          <spam>
+            <p className=" mx-2">{imgper}%</p>
+          </spam>
+        </div>
+        {imgper === 100 ? (
+          <button
+            className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-1 text-center me-2 mb-2"
+            type="submit"
+          >
+            Upload
+          </button>
         ) : (
-          <img src={image} height={100} width={100} alt="" />
+          ""
         )}
-        <button type="submit">Upload</button>
       </form>
       <div>
         Render uploaded images
         {images.length === 0 ? (
           <div>No images uploaded</div>
         ) : (
-          <div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {images.map((data, index) => (
-              <img
-                key={index}
-                src={data.imgurl}
-                height={100}
-                width={100}
-                alt=""
-              />
+              <Link
+                to={data.imgurl}
+                className=" p-2 bg-secondary-light dark:bg-secondary-dark rounded-lg"
+              >
+                <img
+                  className=" rounded-lg"
+                  key={index}
+                  src={data.imgurl}
+                  alt="Uploaded"
+                />
+              </Link>
             ))}
           </div>
         )}
