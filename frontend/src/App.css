@@ -1,8 +1,10 @@
 .burger {
   top: 60px;
+  display: none;
 }
 .h_90 {
-  height: 90%;
+  min-height: 90%;
+  max-height: 99%;
 }
 .w_100 {
   width: 100%;
@@ -19,6 +21,9 @@
     display: none;
   }
   .toggle {
+    display: flex;
+  }
+  .burger {
     display: flex;
   }
 }

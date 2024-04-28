@@ -12,7 +12,7 @@ export default function Menubar() {
   };
 
   return (
-    <div className="burger bg-primary-light dark:bg-primary-dark h_90 w_100 z-50 flex justify-center absolute right-0 ">
+    <div className="burger bg-primary-light dark:bg-primary-dark py-6 w_100 z-50 flex justify-center absolute right-0 ">
       {/* <div className="buttons-menu flex w-fit mt-4 flex-col"> */}
       <div className="buttons-menu flex w-fit mt-4 flex-col">
         <Link
