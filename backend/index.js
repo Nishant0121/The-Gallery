@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "https://the-gallery-frontend.vercel.app", // Replace with your frontend's actual origin
+    origin: "http://localhost:3000", // Replace with your frontend's actual origin
   })
 );
 
@@ -100,37 +100,6 @@ app.post("/logout", (req, res) => {
   res.clearCookie("token").json({ message: "Logout successful" });
 });
 
-// Initialize multer with disk storage
-
-// Use multer middleware for handling file uploads
-// app.post("/upload", (req, res) => {
-
-//   upload(req, res, async (err) => {
-//     try {
-//       if (err) {
-//         throw err;
-//       } else {
-//         // Access uploaded file details from req.file
-//         const { filename, path } = req.file;
-
-//         // Create a new image document in the database
-//         const newImage = await Image.create({
-//           userId: req.body.userId,
-//           filename: filename,
-//           filePath: path,
-//         });
-
-//         res.json({ message: "Image uploaded successfully", image: newImage });
-//       }
-//     } catch (error) {
-//       console.error("Image upload failed", error);
-//       res
-//         .status(500)
-//         .json({ message: "Image upload failed", error: error.message });
-//     }
-//   });
-// });
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "images/");
@@ -144,13 +113,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/upload", upload.single("image"), async (req, res) => {
-  console.log(req.body);
-  const imageName = req.file.filename;
+  const imgurl = req.body.imageUrl;
   const userId = req.body.userId;
 
   try {
-    await Image.create({ userId: userId, image: imageName });
-    res.json({ status: "ok" });
+    const responce = await Image.create({ userId: userId, imgurl: imgurl });
+    res.json(responce);
   } catch (error) {
     res.json({ status: error });
   }

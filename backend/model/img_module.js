@@ -14,8 +14,9 @@ const mongoose = require("mongoose");
 const ImageDetailsScehma = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    image: String,
+    imgurl: String,
   },
+
   {
     collection: "ImageDetails",
   }
