@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -57,7 +58,16 @@ export default function Register() {
           <span class="sr-only">Loading...</span>
         </div>
       ) : (
-        <form className="max-w-md mt-10  rounded-lg dark:bg-secondary-dark bg-secondary-light dark:text-t-dark text-t-light p-3 shadow-lg">
+        <motion.form
+          className="max-w-md mt-10 m-2  rounded-lg dark:bg-secondary-dark bg-secondary-light dark:text-t-dark text-t-light p-3 shadow-lg"
+          initial={{ opacity: 1, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.3,
+            delay: 0,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
@@ -116,7 +126,7 @@ export default function Register() {
             Register
           </button>
           <Link to="/login">Have an Account? Login Here!</Link>
-        </form>
+        </motion.form>
       )}
     </div>
   );

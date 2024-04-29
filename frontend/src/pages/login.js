@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../userContext";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -64,7 +65,16 @@ export default function Login() {
           <span class="sr-only">Loading...</span>
         </div>
       ) : (
-        <form className="max-w-md mt-10 mx-auto shadow-lg rounded-lg dark:bg-secondary-dark bg-secondary-light dark:text-t-dark text-t-light p-3 ">
+        <motion.form
+          className="max-w-md mt-10 mx-3  shadow-lg rounded-lg dark:bg-secondary-dark bg-secondary-light dark:text-t-dark text-t-light p-3 "
+          initial={{ opacity: 1, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.3,
+            delay: 0,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"
@@ -109,7 +119,7 @@ export default function Login() {
             Login
           </button>
           <Link to="/register">Don't have an account? Register now!</Link>
-        </form>
+        </motion.form>
       )}
     </div>
   );

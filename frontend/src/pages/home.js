@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../userContext";
 import { useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { user } = useContext(UserContext);
@@ -10,7 +11,6 @@ export default function Home() {
   const [images, setImages] = useState([]);
 
   const userdata = JSON.parse(localStorage.getItem("user"));
-  console.log(userdata);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -31,10 +31,31 @@ export default function Home() {
     fetchImages(); // Call fetchImages function
   }, []);
 
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
     <div className="home">
       <div className="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16">
+        {/*  */}
+        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16 ">
           <div className="mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
             <h2 className="text-3xl font-bold sm:text-4xl">
               {userdata ? (
@@ -51,10 +72,16 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <motion.div
+            className="grid grid-cols-2 gap-4 sm:grid-cols-3"
+            variants={container}
+            initial="hidden"
+            animate="visible"
+          >
             <Link
               className="block bg-secondary-light dark:bg-secondary-dark rounded-xl  p-4 shadow-md hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
               to={user && userdata ? "/addimage" : "/login"}
+              variants={item}
             >
               <span className="inline-block rounded-lg bg-gray-50 dark:bg-primary-dark p-3 shadow-lg">
                 <svg
@@ -85,6 +112,7 @@ export default function Home() {
             <Link
               className="block bg-secondary-light dark:bg-secondary-dark rounded-xl  p-4 shadow-md hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
               to="https://portfolio-nishant.vercel.app/"
+              variants={item}
             >
               <span className="inline-block rounded-lg bg-gray-50 dark:bg-primary-dark p-3 shadow-md">
                 <svg
@@ -111,8 +139,9 @@ export default function Home() {
                 Discover the creator behind this platform.
               </p>
             </Link>
-          </div>
+          </motion.div>
         </div>
+        {/*  */}
       </div>
       <div>
         {images.length === 0 || userdata === null ? (
@@ -122,7 +151,7 @@ export default function Home() {
             <div className=" text-center font-bold m-2">
               Your Uploaded Images
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
               {images.map((data, index) => (
                 <Link
                   to={data.imgurl}

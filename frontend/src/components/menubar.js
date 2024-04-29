@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../userContext";
+import { motion } from "framer-motion";
 
 export default function Menubar() {
   const { isOpen, setIsOpen } = useContext(UserContext);
@@ -12,7 +13,11 @@ export default function Menubar() {
   };
 
   return (
-    <div className="burger bg-primary-light dark:bg-primary-dark py-6 w_100 z-50 flex justify-center absolute right-0 ">
+    <motion.div
+      className="burger bg-primary-light dark:bg-primary-dark py-6 w_100 z-50 flex justify-center absolute right-0 "
+      animate={{ y: 0 }}
+      initial={{ y: -300 }}
+    >
       {/* <div className="buttons-menu flex w-fit mt-4 flex-col"> */}
       <div className="buttons-menu flex w-fit mt-4 flex-col">
         <Link
@@ -106,6 +111,6 @@ export default function Menubar() {
           )}
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
