@@ -27,7 +27,7 @@ export default function Register() {
 
   const uploadfile = async (file, type) => {
     const storage = getStorage(app);
-    const folder = "images/";
+    const folder = "profile/";
     const filename = new Date().getTime() + file.name;
     const storageRef = ref(storage, folder + filename);
     const uploadTask = uploadBytesResumable(storageRef, file);
