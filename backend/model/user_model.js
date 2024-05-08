@@ -15,6 +15,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  profimgurl: {
+    type: String,
+    require: true,
+  },
 });
 
 const UserModel = mongoose.model("user", UserSchema);

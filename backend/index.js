@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, profimgurl } = req.body;
   try {
     // Check if user with given email already exists
     const existingUser = await User.findOne({ email });
@@ -56,6 +56,7 @@ app.post("/register", async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      profimgurl: profimgurl,
     });
     res.json(userDoc);
   } catch (error) {

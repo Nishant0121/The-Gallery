@@ -1,15 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../firebase";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [image, setImage] = useState(undefined);
+  const [imgper, setImgPer] = useState(0);
+  const [inputs, setInputs] = useState({});
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false); // State for loading animation
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    image && uploadfile(image, "imageUrl");
+  }, [image]);
+
+  const uploadfile = async (file, type) => {
+    const storage = getStorage(app);
+    const folder = "images/";
+    const filename = new Date().getTime() + file.name;
+    const storageRef = ref(storage, folder + filename);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImgPer(Math.round(progress)); //user ternery for video
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        switch (error.code) {
+          case "storage/unauthorized":
+            break;
+          case "storage/canceled":
+            break;
+
+          case "storage/unknown":
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setInputs({ ...inputs, [type]: downloadURL });
+          console.log(inputs);
+        });
+      }
+    );
+  };
+
+  const onImageChange = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+  };
 
   const register = async (e) => {
     e.preventDefault();
@@ -19,6 +86,7 @@ export default function Register() {
         name,
         email,
         password,
+        profimgurl: inputs.imageUrl,
       });
       setUser(userinfo.data);
       // localStorage.setItem("user", JSON.stringify(userinfo.data)); // Store user data in localStorage
@@ -119,13 +187,42 @@ export default function Register() {
               Password
             </label>
           </div>
-          <button
-            onClick={register}
-            className="text-white m-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Register
-          </button>
-          <Link to="/login">Have an Account? Login Here!</Link>
+          <>
+            <label
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="file_input"
+            >
+              Upload Profile Pic
+            </label>
+            <input
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              type="file"
+              accept="image/*"
+              name="image"
+              onChange={onImageChange}
+            />
+          </>
+          <div className="flex items-center">
+            <progress
+              className="progress rounded-full bg-black dark:bg-white"
+              value={imgper}
+              max={100}
+            ></progress>
+            <spam>
+              <p className=" mx-2">{imgper}%</p>
+            </spam>
+          </div>
+          {imgper === 100 ? (
+            <button
+              className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-1 text-center me-2 mb-2"
+              onClick={register}
+            >
+              Register
+            </button>
+          ) : (
+            ""
+          )}
+          <Link to="/login">Already have an Account? Login Here!</Link>
         </motion.form>
       )}
     </div>
