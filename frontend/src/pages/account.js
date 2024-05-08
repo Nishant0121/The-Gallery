@@ -70,7 +70,7 @@ export default function Account() {
               >
                 {userdata.user.profimgurl ? (
                   <img
-                    className=" rounded-full w-24 h-24"
+                    className=" rounded-full w-full h-full object-cover"
                     src={userdata.user.profimgurl}
                     alt=""
                     srcset=""

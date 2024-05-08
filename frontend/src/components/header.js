@@ -100,10 +100,10 @@ export default function Header() {
           to={user ? "/account" : "/login"}
           className="user flex  p-1 rounded-full  dark:bg-secondary-dark bg-secondary-light justify-around"
         >
-          <div className="p-1 ">
+          <div className="p-1  w-6 h-6">
             {user && userdata ? (
               <img
-                className="w-6 h-6 rounded-full"
+                className=" w-full h-full object-cover rounded-full"
                 src={userdata.user.profimgurl}
                 alt=""
                 srcset=""
