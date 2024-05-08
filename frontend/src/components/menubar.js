@@ -95,7 +95,7 @@ export default function Menubar() {
               <img
                 className="w-6 h-6 rounded-full"
                 src={userdata.user.profimgurl}
-                alt=""
+                alt="-"
                 srcset=""
               />
             ) : (
