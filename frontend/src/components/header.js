@@ -100,10 +100,10 @@ export default function Header() {
           to={user ? "/account" : "/login"}
           className="user flex  p-1 rounded-full  dark:bg-secondary-dark bg-secondary-light justify-around"
         >
-          <div className="p-1  w-6 h-6">
-            {user && userdata ? (
+          <div className="p-1">
+            {user || userdata ? (
               <img
-                className=" w-full h-full object-cover rounded-full"
+                className="  w-6 h-6 object-cover rounded-full"
                 src={userdata.user.profimgurl}
                 alt=""
                 srcset=""
@@ -123,7 +123,7 @@ export default function Header() {
               </svg>
             )}
           </div>
-          {userdata && user ? (
+          {userdata || user ? (
             <div className="p-1">{userdata.user.name}</div>
           ) : (
             <div className="p-1">Login</div>

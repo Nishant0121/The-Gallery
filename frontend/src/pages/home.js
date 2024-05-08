@@ -50,6 +50,8 @@ export default function Home() {
       opacity: 1,
     },
   };
+  console.log(user);
+  console.log(userdata);
 
   return (
     <div className="home">
@@ -58,7 +60,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16 ">
           <div className="mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
             <h2 className="text-3xl font-bold sm:text-4xl">
-              {userdata && user ? (
+              {userdata || user ? (
                 <span>Hello {userdata.user.name} !!</span>
               ) : (
                 "Hello User !!"

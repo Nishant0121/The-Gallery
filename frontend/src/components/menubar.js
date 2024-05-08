@@ -90,10 +90,10 @@ export default function Menubar() {
           onClick={toggleMenu}
           className="user-menu flex m-1 p-1 rounded-full  dark:bg-secondary-dark bg-secondary-light justify-around"
         >
-          <div className="w-6 h-6 p-1">
-            {userdata && user ? (
+          <div className="p-1">
+            {userdata || user ? (
               <img
-                className="w-full h-full object-cover rounded-full"
+                className="w-6 h-6  object-cover rounded-full"
                 src={userdata.user.profimgurl}
                 alt="-"
                 srcset=""

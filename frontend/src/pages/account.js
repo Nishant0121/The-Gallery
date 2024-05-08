@@ -32,8 +32,7 @@ export default function Account() {
   };
 
   return (
-    <div>
-      <h1>Account</h1>
+    <div className=" mt-10">
       <div className="flex items-center justify-center">
         {loading ? (
           <div role="status">
@@ -60,7 +59,7 @@ export default function Account() {
         )}
       </div>
 
-      {user ? (
+      {user || userdata ? (
         <div className=" flex items-center justify-center">
           <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col items-center mt-4 pb-10">
@@ -91,10 +90,18 @@ export default function Account() {
                 )}
               </div>
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-                {user ? <span>{userdata.user.name}</span> : "Please Login"}
+                {user || userdata ? (
+                  <span>{userdata.user.name}</span>
+                ) : (
+                  "Please Login"
+                )}
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {user ? <span>{userdata.user.email}</span> : "Please Login"}
+                {user || userdata ? (
+                  <span>{userdata.user.email}</span>
+                ) : (
+                  "Please Login"
+                )}
               </span>
             </div>
             <div className=" flex items-center justify-center">
