@@ -93,7 +93,7 @@ export default function Menubar() {
           <div className="w-6 h-6 p-1">
             {userdata && user ? (
               <img
-                className="w-full h-full object-cover rounded-full"
+                className=" object-cover rounded-full"
                 src={userdata.user.profimgurl}
                 alt="-"
                 srcset=""
