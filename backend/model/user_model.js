@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+import { boolean } from "@storybook/addon-knobs";
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
@@ -19,6 +20,8 @@ const UserSchema = new Schema({
     type: String,
     require: true,
   },
+
+  isAdmin: { type: Boolean, default: false },
 });
 
 const UserModel = mongoose.model("user", UserSchema);

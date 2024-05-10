@@ -138,6 +138,15 @@ app.get("/images", async (req, res) => {
   }
 });
 
+app.get("/getuser", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "ldrs/bouncy";
 
@@ -8,8 +8,24 @@ import { UserContext } from "../userContext";
 
 export default function Account() {
   const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
   const userdata = JSON.parse(localStorage.getItem("user"));
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (userdata.user.isAdmin) {
+      const fetchUser = async () => {
+        try {
+          const res = await axios.get("/getuser");
+          setUsers(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchUser();
+    } else {
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -60,7 +76,7 @@ export default function Account() {
       </div>
 
       {user || userdata ? (
-        <div className=" flex items-center justify-center">
+        <div className=" flex flex-col items-center justify-center">
           <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col items-center mt-4 pb-10">
               <div
@@ -107,7 +123,7 @@ export default function Account() {
             <div className=" flex items-center justify-center">
               <button
                 type="button"
-                class="flex items-center justify-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                className="flex items-center justify-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                 onClick={handleLogout}
                 disabled={loading}
               >
@@ -129,6 +145,46 @@ export default function Account() {
                 {loading ? "Logging out..." : "Logout"}
               </button>
             </div>
+          </div>
+          <div className=" mt-12">
+            {userdata.user.isAdmin ? (
+              <div className="relative shadow-lg rounded-lg overflow-x-auto">
+                <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Profile
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        User Name
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((userinfo, index) => (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td className="">
+                          <img
+                            className=" ml-5 h-8 w-8 object-cover rounded-full"
+                            src={userinfo.profimgurl}
+                            alt=""
+                            srcset=""
+                          />
+                        </td>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {userinfo.name}
+                        </th>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ) : (
