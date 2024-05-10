@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "https://the-gallery-frontend.vercel.app", // Replace with your frontend's actual origin
+    origin: "http://localhost:3000", // Replace with your frontend's actual origin
   })
 );
 

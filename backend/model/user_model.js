@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-import { boolean } from "@storybook/addon-knobs";
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
