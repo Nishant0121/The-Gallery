@@ -10,7 +10,7 @@ import Home from "./pages/home";
 import AddIamge from "./pages/add_image";
 import UserDetails from "./components/userDetail";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://the-gallery-backend-wfin.onrender.com";
 axios.defaults.withCredentials = true;
 
 function App() {
