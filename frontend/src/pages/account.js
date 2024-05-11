@@ -173,12 +173,14 @@ export default function Account() {
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                         >
                           <td className="">
-                            <img
-                              className=" ml-5 h-8 w-8 object-cover rounded-full"
-                              src={userinfo.profimgurl}
-                              alt=""
-                              srcSet=""
-                            />
+                            <Link to={`/user/${userinfo._id}`}>
+                              <img
+                                className=" ml-5 h-8 w-8 object-cover rounded-full"
+                                src={userinfo.profimgurl}
+                                alt=""
+                                srcSet=""
+                              />
+                            </Link>
                           </td>
                           <th
                             scope="row"
