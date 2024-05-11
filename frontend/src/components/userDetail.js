@@ -54,7 +54,7 @@ const UserDetails = () => {
             />
           </Link>
         </div>
-        <div className="info ml-3 flex flex-col items-start overflow-scroll justify-center">
+        <div className="info ml-3 flex flex-col items-start overflow-auto  justify-center">
           <h1>{user.name}</h1>
           <p>{user.email}</p>
           <p>{time}</p>
