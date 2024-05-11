@@ -19,8 +19,11 @@ const UserSchema = new Schema({
     type: String,
     require: true,
   },
-
   isAdmin: { type: Boolean, default: false },
+  time: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const UserModel = mongoose.model("user", UserSchema);

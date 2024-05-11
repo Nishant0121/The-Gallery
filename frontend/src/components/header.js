@@ -106,7 +106,7 @@ export default function Header() {
                 className="  w-6 h-6 object-cover rounded-full"
                 src={userdata.user.profimgurl}
                 alt=""
-                srcset=""
+                srcSet=""
               />
             ) : (
               <svg

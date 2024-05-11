@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "ldrs/bouncy";
 
@@ -14,7 +15,7 @@ export default function Account() {
 
   useEffect(() => {
     if (userdata.user.isAdmin) {
-      const fetchUser = async () => {
+      const fetchUsers = async () => {
         try {
           const res = await axios.get("/getuser");
           setUsers(res.data);
@@ -22,10 +23,10 @@ export default function Account() {
           console.log(err);
         }
       };
-      fetchUser();
+      fetchUsers();
     } else {
     }
-  }, []);
+  }, [userdata.user.isAdmin]);
 
   const handleLogout = async () => {
     try {
@@ -88,7 +89,7 @@ export default function Account() {
                     className=" rounded-full w-full h-full object-cover"
                     src={userdata.user.profimgurl}
                     alt=""
-                    srcset=""
+                    srcSet=""
                   />
                 ) : (
                   <svg
@@ -148,40 +149,51 @@ export default function Account() {
           </div>
           <div className=" mt-12">
             {userdata.user.isAdmin ? (
-              <div className="relative shadow-lg rounded-lg overflow-x-auto">
-                <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">
-                        Profile
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        User Name
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map((userinfo, index) => (
-                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td className="">
-                          <img
-                            className=" ml-5 h-8 w-8 object-cover rounded-full"
-                            src={userinfo.profimgurl}
-                            alt=""
-                            srcset=""
-                          />
-                        </td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {userinfo.name}
+              <>
+                <div className="rounded-lg min-w-64 max-w-72">
+                  <table className="w-full">
+                    <thead className=" sticky text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                        <th scope="col" className="px-6 py-3">
+                          Profile
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          User Name
                         </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                  </table>
+                </div>
+                <div className=" shadow-lg rounded-lg min-w-64 max-w-72 max-h-36 overflow-scroll">
+                  <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <tbody>
+                      {users.map((userinfo, index) => (
+                        <tr
+                          key={userinfo._id}
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <td className="">
+                            <img
+                              className=" ml-5 h-8 w-8 object-cover rounded-full"
+                              src={userinfo.profimgurl}
+                              alt=""
+                              srcSet=""
+                            />
+                          </td>
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            <Link to={`/user/${userinfo._id}`}>
+                              {userinfo.name}
+                            </Link>
+                          </th>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             ) : (
               ""
             )}

@@ -8,6 +8,7 @@ import { UserContextProvider } from "./userContext";
 import Account from "./pages/account";
 import Home from "./pages/home";
 import AddIamge from "./pages/add_image";
+import UserDetails from "./components/userDetail";
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -24,6 +25,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/register" element={<Register />} />
           <Route path="/addimage" element={<AddIamge />} />
+          <Route path="/user/:userId" element={<UserDetails />} />
         </Route>
       </Routes>
     </UserContextProvider>
